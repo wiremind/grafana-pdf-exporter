@@ -11,8 +11,8 @@ if [ ! -f $2 ]; then
 fi
 
 ### is AWS_REGION mandatory?
-if [[ ! -z $AWS_BUCKET_NAME && ! -z $AWS_ACCESS_KEY_ID && ! -z $AWS_SECRET_ACCESS_KEY && ! -z $AWS_REGION ]]; then
-  echo 'Copying $2 to s3://$AWS_BUCKET_NAME/'
+if [[ ! -z $AWS_BUCKET_NAME && ! -z $AWS_ACCESS_KEY_ID && ! -z $AWS_SECRET_ACCESS_KEY ]]; then
+  echo "Copying $2 to s3://$AWS_BUCKET_NAME/"
   aws s3 cp $2 s3://$AWS_BUCKET_NAME/
   exit 0
 fi
