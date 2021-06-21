@@ -2,7 +2,9 @@ FROM buildkite/puppeteer
 
 WORKDIR .
 
-COPY grafana_pdf.js ./
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive  apt-get install -y awscli
+
+COPY grafana_pdf.js grafana_pdf_exporter.sh  ./
 
 # just run the container doing nothing
 ENTRYPOINT ["sh", "-c", "sleep infinity"]
