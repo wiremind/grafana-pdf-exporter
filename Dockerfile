@@ -2,7 +2,7 @@ FROM buildkite/puppeteer
 
 WORKDIR .
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive  apt-get install -y awscli
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive  apt-get install -y awscli curl
 
 COPY grafana_pdf.js grafana_pdf_exporter.sh sendgridSendEmail.sh  ./
 

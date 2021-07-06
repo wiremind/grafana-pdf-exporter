@@ -3,11 +3,12 @@
 const puppeteer = require('puppeteer');
 
 // URL to load should be passed as first parameter
-const url = process.argv[2];
+//const url = process.argv[2];
+const url = process.env.URL;
 // Username and password (with colon separator) should be second parameter
-const auth_string = process.argv[3];
+const auth_string = process.env.CREDS;
 // Output file name should be third parameter
-const outfile = process.argv[4];
+const outfile = process.env.OUTPUT;
 
 // TODO: Output an error message if number of arguments is not right or arguments are invalid
 
@@ -30,7 +31,7 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
   await page.setExtraHTTPHeaders({'Authorization': auth_header});
 
   // Increase timeout from the default of 30 seconds to 120 seconds, to allow for slow-loading panels
-  await page.setDefaultNavigationTimeout(120000);
+  await page.setDefaultNavigationTimeout(240000);
 
   // Increasing the deviceScaleFactor gets a higher-resolution image. The width should be set to
   // the same value as in page.pdf() below. The height is not important
@@ -59,6 +60,9 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
   var height_px = await page.evaluate(() => {
     return document.getElementsByClassName('react-grid-layout')[0].getBoundingClientRect().bottom;
   }) + 20;
+
+  //Francois: wait for page to be navigable (2min should be more than enough for longrange queries)
+  await page.waitFor(120000);
 
   await page.pdf({
     path: outfile,
