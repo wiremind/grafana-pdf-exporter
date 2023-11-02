@@ -58,7 +58,7 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
 
   // Get the height of the main canvas, and add a margin
   var height_px = await page.evaluate(() => {
-    return document.getElementsByClassName('react-grid-layout')[0].getBoundingClientRect().bottom;
+    return document.getElementsByClassName('react-grid-layout')[0].getBoundingClientRect?.().bottom || 540 ;
   }) + 20;
 
   //Francois: wait for page to be navigable (2min should be more than enough for longrange queries)
