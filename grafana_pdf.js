@@ -10,15 +10,16 @@ const auth_string = process.env.CREDS;
 // Output file name should be third parameter
 const outfile = process.env.OUTPUT;
 
-// TODO: Output an error message if number of arguments is not right or arguments are invalid
+// TODO: Output an error message if number of arguments is not right or
+// arguments are invalid
 
-// Set the browser width in pixels. The paper size will be calculated on the basus of 96dpi,
-// so 1200 corresponds to 12.5".
+// Set the browser width in pixels. The paper size will be calculated on the
+// basus of 96dpi, so 1200 corresponds to 12.5".
 const width_px = 1200;
-// Note that to get an actual paper size, e.g. Letter, you will want to *not* simply set the pixel
-// size here, since that would lead to a "mobile-sized" screen (816px), and mess up the rendering.
-// Instead, set e.g. double the size here (1632px), and call page.pdf() with format: 'Letter' and
-// scale = 0.5.
+// Note that to get an actual paper size, e.g. Letter, you will want to *not*
+// simply set the pixel size here, since that would lead to a "mobile-sized"
+// screen (816px), and mess up the rendering. Instead, set e.g. double the size
+// here (1632px), and call page.pdf() with format: 'Letter' and scale = 0.5.
 
 // Generate authorization header for basic auth
 const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
@@ -38,11 +39,13 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
   // Set basic auth headers
   await page.setExtraHTTPHeaders({'Authorization': auth_header});
 
-  // Increase timeout from the default of 30 seconds to 120 seconds, to allow for slow-loading panels
+  // Increase timeout from the default of 30 seconds to 120 seconds, to allow
+  // for slow-loading panels
   await page.setDefaultNavigationTimeout(240000);
 
-  // Increasing the deviceScaleFactor gets a higher-resolution image. The width should be set to
-  // the same value as in page.pdf() below. The height is not important
+  // Increasing the deviceScaleFactor gets a higher-resolution image. The width
+  // should be set to the same value as in page.pdf() below. The height is not
+  // important
   await page.setViewport({
     width: width_px,
     height: 800,
@@ -50,13 +53,15 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
     isMobile: false
   })
 
-  // Wait until all network connections are closed (and none are opened withing 0.5s).
-  // In some cases it may be appropriate to change this to {waitUntil: 'networkidle2'},
-  // which stops when there are only 2 or fewer connections remaining.
+  // Wait until all network connections are closed (and none are opened withing
+  // 0.5s). In some cases it may be appropriate to change this to {waitUntil:
+  // 'networkidle2'}, which stops when there are only 2 or fewer connections
+  // remaining.
   await page.goto(url, {waitUntil: 'networkidle0'});
 
-  // Hide all panel description (top-left "i") pop-up handles and, all panel resize handles
-  // Annoyingly, it seems you can't concatenate the two object collections into one
+  // Hide all panel description (top-left "i") pop-up handles and, all panel
+  // resize handles. Annoyingly, it seems you can't concatenate the two object
+  // collections into one
   await page.evaluate(() => {
     let infoCorners = document.getElementsByClassName('panel-info-corner');
     for (el of infoCorners) { el.hidden = true; };
@@ -66,11 +71,12 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
 
   // Get the height of the main canvas, and add a margin
   var height_px = await page.evaluate(() => {
-    return document.getElementsByClassName('react-grid-layout')[0].getBoundingClientRect?.().bottom || 540 ;
+    return document.getElementsByClassName('react-grid-layout')[0]?.getBoundingClientRect?.().bottom || 540 ;
   }) + 20;
 
-  //Francois: wait for page to be navigable (2min should be more than enough for longrange queries)
-  await page.waitFor(120000);
+  // Francois: wait for page to be navigable (2min should be more than enough
+  // for longrange queries)
+  await page.waitForTimeout(120000);
 
   await page.pdf({
     path: outfile,
