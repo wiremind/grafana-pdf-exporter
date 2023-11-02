@@ -10,7 +10,7 @@ CREDS=${GRAFANA_USER}:${GRAFANA_PASSWORD}
 OUTPUT="$(echo ${2})"
 
 # Node.js require us to pass environment variables this way
-URL=$URL CREDS=$CREDS OUTPUT=$OUTPUT  node grafana_pdf.js
+URL=$URL CREDS=$CREDS OUTPUT=$OUTPUT  node --unhandled-rejections=strict grafana_pdf.js
 
 if [ ! -f $2 ]; then
     echo "Grafana dashboard $1 not exported to $2, exiting"
