@@ -24,7 +24,15 @@ const width_px = 1200;
 const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
 
 (async() => {
-  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+  const browser = await puppeteer.launch({
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+    ],
+    executablePath: '/usr/bin/google-chrome',
+  });
   const page = await browser.newPage();
 
   // Set basic auth headers
