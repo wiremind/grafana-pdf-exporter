@@ -1,0 +1,7 @@
+.git*
+Dockerfile*
+Containerfile*
+.dockerignore
+.pre-commit*
+docker-compose.yml
+venv*
