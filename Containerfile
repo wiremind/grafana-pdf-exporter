@@ -1,4 +1,4 @@
-FROM node:21.1.0-bookworm-slim
+FROM node:26.9.0-bookworm-slim
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
