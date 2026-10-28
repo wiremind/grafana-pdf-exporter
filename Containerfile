@@ -1,4 +1,4 @@
-FROM node:21.1.0-bookworm-slim
+FROM node:24.22.1-trixie-slim
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked apt-get update \
 USER node
 WORKDIR /app
 
-RUN npm install puppeteer
+RUN npm install puppeteer@25
 
 COPY --chown=node:node . .
 

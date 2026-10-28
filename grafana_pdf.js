@@ -76,7 +76,7 @@ const auth_header = 'Basic ' + new Buffer.from(auth_string).toString('base64');
 
   // Francois: wait for page to be navigable (2min should be more than enough
   // for longrange queries)
-  await page.waitForTimeout(120000);
+  await new Promise((resolve) => setTimeout(resolve, 120000));
 
   await page.pdf({
     path: outfile,
