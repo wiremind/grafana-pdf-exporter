@@ -1,5 +1,9 @@
 # grafana-pdf-exporter
 
+> [!WARNING]
+> This repository is archived and no longer maintained. It receives no updates, security fixes or new releases, and issues and pull requests are closed.
+> Existing releases and container images remain available as-is.
+
 Export a Grafana dashboard as PDF
 
 ## How to run
